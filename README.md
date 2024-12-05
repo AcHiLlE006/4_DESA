@@ -1,61 +1,119 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Up - Documentation</title>
+</head>
+<body>
+    <header>
+        <h1>Link Up - Headless Social Media Platform</h1>
+        <p>
+            Welcome to the **Link Up** backend platform! This application provides APIs for 
+            social media content management, accessible via Swagger documentation at:
+            <strong><a href="http://localhost:3000/" target="_blank">http://localhost:3000/</a></strong>.
+        </p>
+    </header>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+    <section id="features">
+        <h2>Features</h2>
+        <ul>
+            <li><strong>User Authentication and Authorization:</strong> Secure login and role-based access control.</li>
+            <li><strong>Content Management:</strong> CRUD operations for user posts.</li>
+            <li><strong>Media Management:</strong> Upload and retrieve media files via Azure Blob Storage.</li>
+        </ul>
+    </section>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+    <section id="setup">
+        <h2>Setup Instructions</h2>
+        <h3>1. Clone the Repository</h3>
+        <pre>
+            <code>
+git clone https://github.com/your-repo/link-up.git
+cd link-up
+            </code>
+        </pre>
 
-## Description
+        <h3>2. Configure Environment Variables</h3>
+        <p>Create a <code>.env</code> file in the root directory:</p>
+        <pre>
+            <code>
+DATABASE_URL=<database_connection_string>
+AZURE_STORAGE_CONNECTION_STRING=<your_blob_storage_connection_string>
+SECRET_KEY=<your_secret_key_for_JWT>
+            </code>
+        </pre>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+        <h3>3. Install Dependencies</h3>
+        <h4>For FastAPI (Python):</h4>
+        <ol>
+            <li>Set up a virtual environment:
+                <pre><code>python -m venv venv</code></pre>
+                <pre><code>source venv/bin/activate  # On Windows: venv\Scripts\activate</code></pre>
+            </li>
+            <li>Install required libraries:
+                <pre><code>pip install -r requirements.txt</code></pre>
+            </li>
+        </ol>
 
-## Project setup
+        <h4>For Express.js (Node.js):</h4>
+        <pre>
+            <code>
+npm install
+            </code>
+        </pre>
+    </section>
 
-```bash
-$ npm install
-```
+    <section id="deployment">
+        <h2>Deploying to Azure</h2>
+        <h3>1. Authenticate with Azure CLI</h3>
+        <pre>
+            <code>
+az login
+            </code>
+        </pre>
 
-## Compile and run the project
+        <h3>2. Deploy the Backend</h3>
+        <h4>Option 1: Using Azure App Service</h4>
+        <ol>
+            <li>Create an App Service:
+                <pre>
+<code>
+az webapp create --resource-group &lt;RESOURCE_GROUP&gt; --plan &lt;SERVICE_PLAN&gt; --name &lt;APP_NAME&gt; --runtime "PYTHON:3.9"
+# For Express.js
+az webapp create --resource-group &lt;RESOURCE_GROUP&gt; --plan &lt;SERVICE_PLAN&gt; --name &lt;APP_NAME&gt; --runtime "NODE:16-lts"
+</code>
+                </pre>
+            </li>
+            <li>Deploy the code:
+                <pre>
+<code>
+az webapp deployment source config-local-git --name &lt;APP_NAME&gt; --resource-group &lt;RESOURCE_GROUP&gt;
+git remote add azure &lt;REMOTE_URL_FROM_AZURE&gt;
+git push azure main
+</code>
+                </pre>
+            </li>
+        </ol>
 
-```bash
-# development
-$ npm run start
+        <h4>Option 2: Using Docker</h4>
+        <ol>
+            <li>Build and push the Docker image:
+                <pre>
+<code>
+docker build -t &lt;your_dockerhub_username&gt;/link-up:latest .
+docker push &lt;your_dockerhub_username&gt;/link-up:latest
+</code>
+                </pre>
+            </li>
+            <li>Deploy the image to an Azure Web App with Docker support.</li>
+        </ol>
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
+        <h3>3. Configure Environment Variables on Azure</h3>
+        <p>
+            In the Azure portal, go to your App Service and add the environment variables 
+            (<code>DATABASE_URL</code>, <code>AZURE_STORAGE_CONNECTION_STRING</code>, <code>SECRET_KEY</code>).
+        </p>
+    </section>
+</body>
+</html>

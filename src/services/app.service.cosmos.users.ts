@@ -7,6 +7,7 @@ export class AzureCosmosUserServiceUsers {
   private container: Container;
 
   constructor() {
+    
     const endpoint = process.env.AZURE_COSMOS_ENDPOINT;
     const key = process.env.AZURE_COSMOS_KEY;
     const databaseId = process.env.AZURE_COSMOS_DATABASE;

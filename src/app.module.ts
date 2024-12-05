@@ -4,6 +4,7 @@ import { UserController } from './controller/app.controller.users';
 import { PostController } from './controller/app.controller.posts';
 import { AzureCosmosUserServiceUsers } from './services/app.service.cosmos.users'; 
 import { AzureCosmosUserServicePosts } from './services/app.service.cosmos.posts';  
+import { AzureBlobService } from './services/app.service.blob';
 
 @Module({
   imports: [ConfigModule.forRoot()],
@@ -11,6 +12,7 @@ import { AzureCosmosUserServicePosts } from './services/app.service.cosmos.posts
   providers: [
     AzureCosmosUserServiceUsers,
     AzureCosmosUserServicePosts,
+    AzureBlobService
   ],
   exports: [AzureCosmosUserServiceUsers, AzureCosmosUserServicePosts],  
 })

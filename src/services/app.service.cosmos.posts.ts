@@ -1,14 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { CosmosClient, Database, Container, User } from '@azure/cosmos';
+import { Inject, Injectable } from '@nestjs/common';
+import { CosmosClient, Database, Container } from '@azure/cosmos';
 import { AzureCosmosUserServiceUsers } from './app.service.cosmos.users';
 
 @Injectable()
 export class AzureCosmosUserServicePosts {
   private database: Database;
   private container: Container;
-  private user : AzureCosmosUserServiceUsers;
 
-  constructor() {
+  constructor( @Inject(AzureCosmosUserServiceUsers) 
+private readonly userService : AzureCosmosUserServiceUsers) {
+   
 
     const endpoint = process.env.AZURE_COSMOS_ENDPOINT;
     const key = process.env.AZURE_COSMOS_KEY;
@@ -48,37 +49,45 @@ export class AzureCosmosUserServicePosts {
 
   // Récupérer toutes les publications d'un utilisateur
   async getUserPosts(userId: string): Promise<any[]> {
-    const user = await this.user.getUser(userId);
+    const user = await this.userService.getUser(userId);
     return user.posts;
   }
 
   // Mettre à jour une publication
   async updatePost(userId: string, postId: string, updatedContent: string): Promise<any> {
-    const user = await this.user.getUser(userId);
+    const user = await this.userService.getUser(userId);
 
     const postIndex = user.posts.findIndex(post => post.id === postId);
     if (postIndex === -1) {
       throw new Error(`Post ${postId} not found`);
     }
-
+    console.log("c")
     user.posts[postIndex].content = updatedContent;
+    console.log("c")
+
     user.posts[postIndex].updatedAt = new Date().toISOString();
+    console.log("c")
+
     user.updatedAt = new Date().toISOString();
+    console.log("c")
+
 
     const { resource } = await this.container.item(userId, userId).replace(user);
+    console.log("c")
+
     return resource;
   }
 
   // Supprimer une publication
   async deletePost(userId: string, postId: string): Promise<any> {
-    const user = await this.user.getUser(userId);
+    const user = await this.userService.getUser(userId);
 
     const postIndex = user.posts.findIndex(post => post.id === postId);
     if (postIndex === -1) {
       throw new Error(`Post ${postId} not found`);
     }
 
-    user.posts.splice(postIndex, 1); // Supprimer la publication
+    user.posts.splice(postIndex, 1); 
     user.updatedAt = new Date().toISOString();
 
     const { resource } = await this.container.item(userId, userId).replace(user);
