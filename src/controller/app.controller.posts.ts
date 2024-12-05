@@ -1,12 +1,13 @@
 import { Controller, Post, Body, Param, Delete, Get, Put } from '@nestjs/common';
 import { AzureCosmosUserServicePosts } from 'src/services/app.service.cosmos.posts';
 
-@Controller('users/:userId/posts')
+@Controller('posts')
 export class PostController {
   constructor(private readonly azureCosmosUserServicePosts: AzureCosmosUserServicePosts) {}
 
   // Ajouter une publication à un utilisateur
   @Post('create')
+
   async addPost(
     @Param('userId') userId: string,
     @Body() body: { content: string; type: string } // Le corps de la requête contient le contenu et le type de la publication
@@ -16,13 +17,13 @@ export class PostController {
   }
 
   // Récupérer toutes les publications d'un utilisateur
-  @Get()
+  @Get('userId')
   async getUserPosts(@Param('userId') userId: string) {
     return await this.azureCosmosUserServicePosts.getUserPosts(userId);
   }
 
   // Mettre à jour une publication
-  @Put(':postId')
+  @Put(':postId/userId')
   async updatePost(
     @Param('userId') userId: string,
     @Param('postId') postId: string,
